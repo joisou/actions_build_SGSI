@@ -24,14 +24,15 @@ jobs:
        - name: Get variables
          run: |
            echo -e "\033[33m 线程数: $(nproc) \033[0m"
-           echo "::set-output name=rom_url::$(jq -r '.rom_url' sgsi.json)"
-           echo "::set-output name=rom_name::$(jq -r '.rom_name' sgsi.json)"
-           echo "::set-output name=pack_sgsi::$(jq -r '.pack_sgsi' sgsi.json)"
-           echo "::set-output name=make_type::$(jq -r '.make_type' sgsi.json)"
-           echo "::set-output name=rom_type::$(jq -r '.rom_type' sgsi.json)"
+           echo "::set-output name=rom_url::$(jq -r '.https://bigota.d.miui.com/22.1.5/miui_LIME_22.1.5_c1645b4618_11.0.zip
+' sgsi.json)"
+           echo "::set-output name=rom_name::$(jq -r '.miui_LIME_22.1.5_c1645b4618_11.0.zip' sgsi.json)"
+           echo "::set-output name=pack_sgsi::$(jq -r '.9_sgsi' sgsi.json)"
+           echo "::set-output name=make_type::$(jq -r '.AB' sgsi.json)"
+           echo "::set-output name=rom_type::$(jq -r '.SGSI' sgsi.json)"
            echo "::set-output name=light_fix::$(jq -r '.light_fix' sgsi.json)"
            echo "::set-output name=bug_fix::$(jq -r '.bug_fix' sgsi.json)"
-           echo "::set-output name=version::$(jq -r '.version' sgsi.json)"
+           echo "::set-output name=version::$(jq -r '.11' sgsi.json)"
            echo "::set-output name=upload_transfer::$(jq -r '.upload_transfer' sgsi.json)"
            echo "::set-output name=upload_release::$(jq -r '.upload_release' sgsi.json)"
            echo "::set-output name=use_7zip::$(jq -r '.use_7zip' sgsi.json)"
@@ -73,12 +74,12 @@ jobs:
            java -version
            
        - name: Download Rom
-         run: |https://bigota.d.miui.com/22.1.5/miui_LIME_22.1.5_c1645b4618_11.0.zipy
+         run: |
            sudo wget -c ${{ steps.var.outputs.rom_url }} -O SGSI-build-tool-11/11/tmp/${{ steps.var.outputs.rom_name }}
              
        - name: Building AB SGSI
          if: steps.var.outputs.make_type == 'AB' || steps.var.outputs.make_type == 'ab'
-         run: |y
+         run: |
             cd SGSI-build-tool-11/11
             sudo bash make.sh AB
             
@@ -112,7 +113,7 @@ jobs:
             sudo bash fixbug.sh ${{ steps.var.outputs.rom_type }}
             
        - name: Packing SGSI Image
-         run: |y
+         run: |
             echo "SGSI化处理完成"
             cd SGSI-build-tool-11/11
             sudo bash makeimg.sh ${{ steps.var.outputs.make_type }}
@@ -126,7 +127,7 @@ jobs:
        
        - name: Packing Output File to zip
          if: steps.var.outputs.use_zip == 'true'
-         run: |y
+         run: |
              cd SGSI-build-tool-11/11
              zip -r ${{ steps.var.outputs.pack_sgsi }} ./SGSI/*
              
