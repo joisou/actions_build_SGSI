@@ -24,8 +24,7 @@ jobs:
        - name: Get variables
          run: |
            echo -e "\033[33m 线程数: $(nproc) \033[0m"
-           echo "::set-output name=rom_url::$(jq -r 'https://bigota.d.miui.com/22.1.5/miui_LIME_22.1.5_c1645b4618_11.0.zip
-' sgsi.json)"
+           echo "::set-output name=rom_url::$(jq -r 'https://bigota.d.miui.com/22.1.5/miui_LIME_22.1.5_c1645b4618_11.0.zip' sgsi.json)"
            echo "::set-output name=rom_name::$(jq -r '.miui_LIME_22.1.5_c1645b4618_11.0.zip' sgsi.json)"
            echo "::set-output name=pack_sgsi::$(jq -r '.9_sgsi' sgsi.json)"
            echo "::set-output name=make_type::$(jq -r '.AB' sgsi.json)"
